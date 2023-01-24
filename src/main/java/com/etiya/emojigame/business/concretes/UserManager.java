@@ -4,6 +4,7 @@ import com.etiya.emojigame.business.abstracts.UserService;
 import com.etiya.emojigame.business.constants.Messages;
 import com.etiya.emojigame.business.dtos.requests.AddUserRequest;
 import com.etiya.emojigame.business.dtos.responses.AddUserResponse;
+import com.etiya.emojigame.core.utils.exceptions.BusinessException;
 import com.etiya.emojigame.core.utils.messages.MessageService;
 import com.etiya.emojigame.core.utils.results.DataResult;
 import com.etiya.emojigame.core.utils.results.SuccessDataResult;
@@ -32,6 +33,8 @@ public class UserManager implements UserService {
 
         User user = new User();
 
+        checkUserExistWithSameName(addUserRequest.getUserName());
+
         user.setUserName(addUserRequest.getUserName());
 
         User savedUser = this.userRepository.save(user);
@@ -44,4 +47,15 @@ public class UserManager implements UserService {
         return new SuccessDataResult<AddUserResponse>(addUserResponse, Messages.User.userAdded);
 
     }
+
+    private void checkUserExistWithSameName(String userName) {
+        User user = this.userRepository.findByUserName(userName);
+
+        if (user != null) {
+            throw new BusinessException(Messages.User.userAlreadyExist);
+        }
+
+    }
+
+
 }
