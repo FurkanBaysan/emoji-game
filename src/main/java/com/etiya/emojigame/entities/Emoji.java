@@ -7,23 +7,22 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Entity
-@Table(name = "answers")
+@Table(name = "emojis")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Answer {
-
+public class Emoji {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
-
-    @OneToOne
-    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
+
+
 }

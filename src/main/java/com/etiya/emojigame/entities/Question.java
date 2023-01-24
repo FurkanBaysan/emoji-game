@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "questions")
@@ -20,20 +21,13 @@ public class Question {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "emojiimage1")
-    private String emojiImage1;
 
-    @Column(name = "emojiimage2")
-    private String emojiImage2;
+    @OneToMany(mappedBy = "question")
+    private List<Emoji> emojis;
 
-    @Column(name = "emojiimage3")
-    private String emojiImage3;
 
-    @Column(name = "emojiimage4")
-    private String emojiImage4;
-
-    @Column(name = "emojiimage5")
-    private String emojiImage5;
+    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
+    private Answer answer;
 
 
 }

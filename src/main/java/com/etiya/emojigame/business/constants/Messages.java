@@ -14,6 +14,7 @@ public class Messages {
     public static class User {
         public static final String userExists = "userNotFound";
         public static final String getAllUsers = "allUsersFetchedFromDatabase";
+        public static final String userAdded = "userSuccessfullyAddedToDatabase";
     }
 
 }
