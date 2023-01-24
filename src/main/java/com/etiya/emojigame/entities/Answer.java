@@ -26,4 +26,6 @@ public class Answer {
     @OneToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     private Question question;
+
+
 }
