@@ -8,8 +8,11 @@ import com.etiya.emojigame.core.utils.results.DataResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "Users/")
@@ -23,7 +26,7 @@ public class UsersController {
     }
 
     @PostMapping("addUser")
-    public ResponseEntity<DataResult<AddUserResponse>> addUser(AddUserRequest addUserRequest) {
+    public ResponseEntity<DataResult<AddUserResponse>> addUser(@RequestBody @Valid AddUserRequest addUserRequest) {
         DataResult<AddUserResponse> addUserResponse = this.userService.addUser(addUserRequest);
         return new ResponseEntity<DataResult<AddUserResponse>>(addUserResponse, HttpStatus.CREATED);
     }
