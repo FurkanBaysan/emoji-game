@@ -18,4 +18,8 @@ public class AddUserRequest {
 
     @Pattern(regexp = "(^[a-zA-Z0-9][a-zA-Z0-9\\W+]+$)", message = Messages.User.userNameMustContainLetters)
     private String userName;
+
+
+
+
 }
