@@ -17,6 +17,7 @@ public class Messages {
         public static final String getAllUsers = "All users fetched from database";
         public static final String userAdded = "user successfully added to the database";
         public static final String userAlreadyExist = "user already exist with same name";
+        public static final String userNameMustContainLetters="username must be contain letters";
 
     }
 

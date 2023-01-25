@@ -1,6 +1,7 @@
 package com.etiya.emojigame.business.dtos.requests;
 
 
+import com.etiya.emojigame.business.constants.Messages;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,6 @@ import javax.validation.constraints.Pattern;
 public class AddUserRequest {
 
     //@Pattern(regexp="(^[0-9]{11}$)", message = "Nationality id must consist of digits and 11 characters.")
-    @Pattern(regexp = "(^[a-zA-Z0-9][a-zA-Z0-9 ]+$)", message = "username must be contain letters.")
+    @Pattern(regexp = "(^[a-zA-Z0-9][a-zA-Z0-9\\W+]+$)", message = Messages.User.userNameMustContainLetters)
     private String userName;
 }
