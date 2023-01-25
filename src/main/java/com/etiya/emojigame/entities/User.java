@@ -21,7 +21,14 @@ public class User {
     @Column(name = "username")
     private String userName;
 
-    @Column(name = "imageurl")
-    private String imageUrl;
+
+    @OneToOne(mappedBy = "user")
+    private Score score;
+
+
+    //  avatar
+    /*@Column(name = "imageurl")
+    private String imageUrl; */
+
 
 }

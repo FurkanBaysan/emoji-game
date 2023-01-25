@@ -23,7 +23,9 @@ public class Score {
     @Column(name = "point")
     private int point;
 
-
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 
 }
