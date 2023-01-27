@@ -2,8 +2,10 @@ package com.etiya.emojigame;
 
 import com.etiya.emojigame.core.utils.exceptions.BusinessException;
 import com.etiya.emojigame.core.utils.results.ErrorDataResult;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,6 +22,11 @@ public class EmojigameApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EmojigameApplication.class, args);
+    }
+
+    @Bean
+    public ModelMapper getModelMapper() {
+        return new ModelMapper();
     }
 
 

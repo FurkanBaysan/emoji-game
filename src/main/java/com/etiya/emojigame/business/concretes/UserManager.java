@@ -7,12 +7,16 @@ import com.etiya.emojigame.business.dtos.responses.AddUserResponse;
 import com.etiya.emojigame.core.utils.exceptions.BusinessException;
 import com.etiya.emojigame.core.utils.messages.MessageService;
 import com.etiya.emojigame.core.utils.results.DataResult;
+import com.etiya.emojigame.core.utils.results.Result;
 import com.etiya.emojigame.core.utils.results.SuccessDataResult;
+import com.etiya.emojigame.core.utils.results.SuccessResult;
 import com.etiya.emojigame.entities.User;
 import com.etiya.emojigame.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.regex.Pattern;
 
 
 @Service
@@ -56,8 +60,6 @@ public class UserManager implements UserService {
         }
 
     }
-
-
 
 
 }

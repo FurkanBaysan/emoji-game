@@ -1,5 +1,7 @@
 package com.etiya.emojigame.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +25,12 @@ public class Question {
 
 
     @OneToMany(mappedBy = "question")
+    @JsonIgnore
     private List<Emoji> emojis;
 
 
     @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Answer answer;
 
 

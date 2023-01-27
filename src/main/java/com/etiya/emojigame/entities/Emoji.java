@@ -24,5 +24,8 @@ public class Emoji {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    @Column(name = "imageurl")
+    private String imageUrl;
+
 
 }
