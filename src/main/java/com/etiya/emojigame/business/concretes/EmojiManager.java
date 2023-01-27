@@ -27,7 +27,7 @@ public class EmojiManager implements EmojiService {
     }
 
     @Override
-    public List<Emoji> getAll() {
+    public List<Emoji> getAllEmojis() {
         return this.emojiRepository.findAll();
     }
 }

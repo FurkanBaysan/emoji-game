@@ -10,5 +10,5 @@ public interface EmojiService {
 
     public void save(Emoji emoji);
 
-    public List<Emoji> getAll();
+    public List<Emoji> getAllEmojis();
 }

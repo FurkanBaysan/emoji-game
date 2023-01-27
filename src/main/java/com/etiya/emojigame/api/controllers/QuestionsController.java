@@ -36,9 +36,4 @@ public class QuestionsController {
         return this.questionService.getAllQuestions();
     }
 
-    @GetMapping("getAll")
-    public List<Question> getAll() {
-        return this.questionService.getAll();
-    }
-
 }

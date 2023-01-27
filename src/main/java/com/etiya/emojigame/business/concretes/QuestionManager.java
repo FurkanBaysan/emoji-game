@@ -54,11 +54,11 @@ public class QuestionManager implements QuestionService {
 
         List<GetQuestionResponse> getQuestionResponses =new ArrayList<>();
 
-        for (Question question:questions) {
+        for (Question question : questions) {
 
             DataResult<List<GetEmojiResponse>> emojiResponses = getEmojisForRelatedQuestion(question.getId());
 
-            GetQuestionResponse getQuestionResponse=new GetQuestionResponse();
+            GetQuestionResponse getQuestionResponse = new GetQuestionResponse();
 
             getQuestionResponse.setId(question.getId());
             getQuestionResponse.setGetEmojiResponses(emojiResponses.getData());
