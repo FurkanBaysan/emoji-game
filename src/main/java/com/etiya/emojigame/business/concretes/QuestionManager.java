@@ -52,8 +52,6 @@ public class QuestionManager implements QuestionService {
     public DataResult<List<GetQuestionResponse>> getAllQuestions() {
         List<Question> questions = this.questionRepository.findAll();
 
-        List<Emoji> emojis = this.emojiService.getAll();
-
         List<GetQuestionResponse> getQuestionResponses =new ArrayList<>();
 
         for (Question question:questions) {
@@ -65,12 +63,9 @@ public class QuestionManager implements QuestionService {
             getQuestionResponse.setId(question.getId());
             getQuestionResponse.setGetEmojiResponses(emojiResponses.getData());
 
-            getQuestionResponses.set(question.getId(),getQuestionResponse);
+            getQuestionResponses.add(getQuestionResponse);
 
         }
-
-
-
 
         return new SuccessDataResult<List<GetQuestionResponse>>(getQuestionResponses,
                 Messages.Question.allEmojisForAllQuestionsSuccessfullyFetched);
