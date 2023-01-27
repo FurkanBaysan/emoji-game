@@ -16,6 +16,10 @@ import java.util.List;
 @Setter
 public class Question {
 
+
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
