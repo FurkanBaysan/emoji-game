@@ -28,4 +28,10 @@ public class Messages {
         public static final String allEmojisForAllQuestionsSuccessfullyFetched = "all emojis for all questions are successfully fetched";
     }
 
+    public static class Answer {
+        public static final String answerWrong = "wrong answer";
+        public static final String rightAnswer = "answer is correct";
+        public static final String questionNotExist = "Question not exist";
+    }
+
 }
