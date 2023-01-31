@@ -12,6 +12,8 @@ import com.etiya.emojigame.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class AnswerManager implements AnswerService {
 
@@ -27,11 +29,12 @@ public class AnswerManager implements AnswerService {
     @Override
     public Result getAnswer(GetAnswerRequest answerRequest) {
 
-        Answer answer = this.answerRepository.getAnswerName(answerRequest.getQuestionId(),
-                answerRequest.getAnswerName());
 
+        String resultString= answerRequest.getAnswerName().replaceAll("\\s+"," ").toLowerCase();
+        System.out.println(resultString);
 
-        //checkIfQuestionIsExist(answer.getQuestion().getId(),answer.getQuestion().getAnswer().getName());
+        Answer answer = this.answerRepository.getAnswerName(answerRequest.getQuestionId(), resultString);
+
 
 
         if(answer==null){
