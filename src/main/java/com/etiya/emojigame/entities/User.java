@@ -26,9 +26,6 @@ public class User {
     private Score score;
 
 
-    //  avatar
-    /*@Column(name = "imageurl")
-    private String imageUrl; */
 
 
 
