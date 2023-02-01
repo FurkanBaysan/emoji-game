@@ -3,6 +3,7 @@ package com.etiya.emojigame.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -24,10 +25,5 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Score score;
-
-
-
-
-
 
 }
