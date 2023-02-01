@@ -19,6 +19,8 @@ public class Messages {
         public static final String userAlreadyExist = "user already exist with same name";
         public static final String userNameMustContainLetters = "username must be contain letters";
 
+        public static final String usersAreListedAccordingToTheirPoints="all users are fetched successfully";
+
     }
 
     public static class Question {

@@ -3,10 +3,16 @@ package com.etiya.emojigame.business.concretes;
 import com.etiya.emojigame.business.abstracts.AnswerService;
 import com.etiya.emojigame.business.abstracts.ScoreService;
 import com.etiya.emojigame.business.constants.Enums;
+import com.etiya.emojigame.business.constants.Messages;
+import com.etiya.emojigame.business.dtos.responses.GetAllGameResultResponse;
+import com.etiya.emojigame.core.utils.results.DataResult;
+import com.etiya.emojigame.core.utils.results.SuccessDataResult;
 import com.etiya.emojigame.entities.Score;
 import com.etiya.emojigame.entities.User;
 import com.etiya.emojigame.repositories.ScoreRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -25,7 +31,7 @@ public class ScoreManager implements ScoreService {
         if (score != null) {
 
             score.setPoint(score.getPoint() + Enums.increasePoint);
-            score.setNumberOfCorrectAnswer(score.getPoint()/20);
+            score.setNumberOfCorrectAnswer(score.getPoint() / 20);
             this.scoreRepository.save(score);
             return score;
         }
@@ -42,15 +48,19 @@ public class ScoreManager implements ScoreService {
 
         savedScore.setPoint(savedScore.getPoint() + Enums.increasePoint);
         savedScore.setUser(user);
-        savedScore.setNumberOfCorrectAnswer(savedScore.getPoint()/20);
+        savedScore.setNumberOfCorrectAnswer(savedScore.getPoint() / 20);
 
         return this.scoreRepository.save(savedScore);
 
     }
 
     @Override
-    public void addScore() {
+    public DataResult<List<GetAllGameResultResponse>> getAllGameResult() {
+        List<GetAllGameResultResponse> allGameResults = this.scoreRepository.getAllGameResults();
 
+        return new SuccessDataResult<List<GetAllGameResultResponse>>(allGameResults,
+                Messages.User.usersAreListedAccordingToTheirPoints);
     }
+
 
 }
