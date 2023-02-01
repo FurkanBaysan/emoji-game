@@ -40,8 +40,8 @@ public class QuestionManager implements QuestionService {
 
         List<GetEmojiResponse> emojiResponses = new ArrayList<>();
 
-        emojiResponses = emojis.stream().map(emoji -> this.modelMapperService.
-                getMapperForResponse().map(emoji, GetEmojiResponse.class)).collect(Collectors.toList());
+        emojiResponses = emojis.stream().map(emoji -> this.modelMapperService.getMapperForResponse()
+                .map(emoji, GetEmojiResponse.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<GetEmojiResponse>>(emojiResponses,
                 Messages.Question.emojisForRelatedQuestionSuccessfullyFetched);
@@ -52,7 +52,7 @@ public class QuestionManager implements QuestionService {
     public DataResult<List<GetQuestionResponse>> getAllQuestions() {
         List<Question> questions = this.questionRepository.findAll();
 
-        List<GetQuestionResponse> getQuestionResponses =new ArrayList<>();
+        List<GetQuestionResponse> getQuestionResponses = new ArrayList<>();
 
         for (Question question : questions) {
 
@@ -91,9 +91,7 @@ public class QuestionManager implements QuestionService {
 
 
         //TODO: Panel yapısı üzerinden Manuel-Mapping'e çevrilmeli.
-        List<Emoji> emojis = addEmojiRequest.getImageUrls().stream().map(
-                        emoji -> this.modelMapperService.getMapperForRequest().map(emoji, Emoji.class))
-                .collect(Collectors.toList());
+        List<Emoji> emojis = addEmojiRequest.getImageUrls().stream().map(emoji -> this.modelMapperService.getMapperForRequest().map(emoji, Emoji.class)).collect(Collectors.toList());
 
         for (Emoji emoji : emojis) {
             this.emojiService.save(emoji);

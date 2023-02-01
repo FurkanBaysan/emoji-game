@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GetAnswerResponse {
-    boolean isTrue;
-    String message;
+    private int numberOfCorrectAnswer;
+    private int point;
+    private int userId;
 }
