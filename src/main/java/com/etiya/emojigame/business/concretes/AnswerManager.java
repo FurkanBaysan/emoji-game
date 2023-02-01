@@ -5,10 +5,10 @@ import com.etiya.emojigame.business.abstracts.QuestionService;
 import com.etiya.emojigame.business.abstracts.ScoreService;
 import com.etiya.emojigame.business.constants.Messages;
 import com.etiya.emojigame.business.dtos.requests.GetAnswerRequest;
-import com.etiya.emojigame.core.utils.results.ErrorResult;
-import com.etiya.emojigame.core.utils.results.Result;
-import com.etiya.emojigame.core.utils.results.SuccessResult;
+import com.etiya.emojigame.business.dtos.responses.GetAnswerResponse;
+import com.etiya.emojigame.core.utils.results.*;
 import com.etiya.emojigame.entities.Answer;
+import com.etiya.emojigame.entities.Score;
 import com.etiya.emojigame.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,19 +29,25 @@ public class AnswerManager implements AnswerService {
     }
 
     @Override
-    public Result getAnswer(GetAnswerRequest answerRequest) {
+    public DataResult<GetAnswerResponse> getAnswer(GetAnswerRequest answerRequest) {
 
 
         String resultString = answerRequest.getAnswerName().replaceAll("\\s+", " ").toLowerCase();
 
         Answer answer = this.answerRepository.getAnswerName(answerRequest.getQuestionId(), resultString);
-
+        GetAnswerResponse getAnswerResponse=new GetAnswerResponse();
 
         if (answer == null) {
-            return new ErrorResult(Messages.Answer.answerWrong);
+           getAnswerResponse.setNumberOfCorrectAnswer(0);
+           getAnswerResponse.setPoint(0);
+            return new ErrorDataResult<>(getAnswerResponse,Messages.Answer.answerWrong);
         } else {
-            this.scoreService.calculateScore(answerRequest.getUserId());
-            return new SuccessResult(Messages.Answer.rightAnswer);
+            Score score= this.scoreService.calculateScore(answerRequest.getUserId());
+
+            getAnswerResponse.setPoint(score.getPoint());
+            getAnswerResponse.setNumberOfCorrectAnswer(score.getNumberOfCorrectAnswer());
+            getAnswerResponse.setUserId(score.getUser().getId());
+            return new SuccessDataResult<>(getAnswerResponse,Messages.Answer.rightAnswer);
         }
 
 

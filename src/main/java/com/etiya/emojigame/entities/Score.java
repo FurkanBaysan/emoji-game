@@ -23,6 +23,9 @@ public class Score {
     @Column(name = "point")
     private int point;
 
+    @Column(name="correct_answer")
+    private int numberOfCorrectAnswer;
+
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

@@ -25,6 +25,7 @@ public class ScoreManager implements ScoreService {
         if (score != null) {
 
             score.setPoint(score.getPoint() + Enums.increasePoint);
+            score.setNumberOfCorrectAnswer(score.getPoint()/20);
             this.scoreRepository.save(score);
             return score;
         }
@@ -35,11 +36,13 @@ public class ScoreManager implements ScoreService {
         Score newUserScore = new Score();
         newUserScore.setUser(user);
         newUserScore.setPoint(Enums.initialPoint);
+        newUserScore.setNumberOfCorrectAnswer(0);
 
         Score savedScore = this.scoreRepository.save(newUserScore);
 
         savedScore.setPoint(savedScore.getPoint() + Enums.increasePoint);
         savedScore.setUser(user);
+        savedScore.setNumberOfCorrectAnswer(savedScore.getPoint()/20);
 
         return this.scoreRepository.save(savedScore);
 
