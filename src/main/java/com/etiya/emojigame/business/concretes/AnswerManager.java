@@ -31,13 +31,12 @@ public class AnswerManager implements AnswerService {
     @Override
     public DataResult<GetAnswerResponse> getAnswer(GetAnswerRequest answerRequest) {
 
-
         String fixedAnswer = answerRequest.getAnswerName().replaceAll("\\s+", " ").toLowerCase();
 
         Answer answer = this.answerRepository.getAnswerName(answerRequest.getQuestionId(), fixedAnswer);
 
-
         Score score = new Score();
+
         // Cevap yanlış ise
         if (answer == null) {
             score = this.scoreService.handleInitialOrWrongAnswer(answerRequest.getUserId());
@@ -58,11 +57,14 @@ public class AnswerManager implements AnswerService {
             getAnswerResponse.setUserId(score.getUser().getId());
             getAnswerResponse.setUpdatedAt(score.getUpdatedAt());*/
 
-
             return new SuccessDataResult<>(getAnswerResponses(score), Messages.Answer.rightAnswer);
+
+
         }
+
     }
 
+    //Builder
     private GetAnswerResponse getAnswerResponses(Score score) {
         return GetAnswerResponse.builder()
                 .userId(score.getUser().getId())
@@ -72,4 +74,6 @@ public class AnswerManager implements AnswerService {
                 .updatedAt(score.getUpdatedAt())
                 .build();
     }
+
+
 }

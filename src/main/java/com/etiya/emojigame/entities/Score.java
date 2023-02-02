@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,20 +25,19 @@ public class Score {
     @Column(name = "point")
     private int point;
 
-    @Column(name="correct_answer")
+    @Column(name = "correct_answer")
     private int numberOfCorrectAnswer;
 
-
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-
-    @Column(name = "updated_at")
+    @Column(name = "update_at")
     private LocalDateTime updatedAt;
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+
 
     @PrePersist
     public void onCreate() {
@@ -51,4 +48,5 @@ public class Score {
     public void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
+
 }

@@ -64,5 +64,27 @@ public class ScoreManager implements ScoreService {
                 Messages.User.usersAreListedAccordingToTheirPoints);
     }
 
+    @Override
+    public Score handleInitialOrWrongAnswer(int userId) {
+        Score currentScore = this.scoreRepository.getScoreOfRelatedUser(userId);
+
+        //Eğer Cevap yanlış ise
+        if (currentScore != null) {
+            currentScore.setUpdatedAt(LocalDateTime.now());
+            return this.scoreRepository.save(currentScore);
+        }
+        //Eğer ilk cevap ise
+        else {
+            User newUser = new User();
+            newUser.setId(userId);
+
+            Score newUserScore = new Score();
+            newUserScore.setUser(newUser);
+            newUserScore.setPoint(Enums.initialPoint);
+            newUserScore.setNumberOfCorrectAnswer(Enums.initialPoint);
+            return this.scoreRepository.save(newUserScore);
+        }
+
+    }
 
 }

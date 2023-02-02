@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ScoreService {
     public Score handleCorrectAnswer(int userId);
-    public Score handleInitialOrWrongAnswer(int userId);
+
     public DataResult<List<GetAllGameResultResponse>> getAllGameResult();
 
-
+    public Score handleInitialOrWrongAnswer(int userId);
 }
