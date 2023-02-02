@@ -8,7 +8,9 @@ import com.etiya.emojigame.entities.Score;
 import java.util.List;
 
 public interface ScoreService {
-    public Score calculateScore(int userId);
+    public Score handleCorrectAnswer(int userId);
 
     public DataResult<List<GetAllGameResultResponse>> getAllGameResult();
+
+    public Score handleInitialOrWrongAnswer(int userId);
 }

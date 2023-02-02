@@ -31,50 +31,49 @@ public class AnswerManager implements AnswerService {
     @Override
     public DataResult<GetAnswerResponse> getAnswer(GetAnswerRequest answerRequest) {
 
+        String fixedAnswer = answerRequest.getAnswerName().replaceAll("\\s+", " ").toLowerCase();
 
-        String resultString = answerRequest.getAnswerName().replaceAll("\\s+", " ").toLowerCase();
+        Answer answer = this.answerRepository.getAnswerName(answerRequest.getQuestionId(), fixedAnswer);
 
-        Answer answer = this.answerRepository.getAnswerName(answerRequest.getQuestionId(), resultString);
-        GetAnswerResponse getAnswerResponse=new GetAnswerResponse();
+        Score score = new Score();
 
+        // Cevap yanlış ise
         if (answer == null) {
-           getAnswerResponse.setNumberOfCorrectAnswer(0);
-           getAnswerResponse.setPoint(0);
-            return new ErrorDataResult<>(getAnswerResponse,Messages.Answer.answerWrong);
-        } else {
-            Score score= this.scoreService.calculateScore(answerRequest.getUserId());
-
+            score = this.scoreService.handleInitialOrWrongAnswer(answerRequest.getUserId());
+           /* getAnswerResponse.setCreatedAt(score.getCreatedAt());
             getAnswerResponse.setPoint(score.getPoint());
             getAnswerResponse.setNumberOfCorrectAnswer(score.getNumberOfCorrectAnswer());
             getAnswerResponse.setUserId(score.getUser().getId());
-            return new SuccessDataResult<>(getAnswerResponse,Messages.Answer.rightAnswer);
+            getAnswerResponse.setUpdatedAt(score.getUpdatedAt());*/
+
+            return new ErrorDataResult<>(getAnswerResponses(score), Messages.Answer.answerWrong);
         }
+        // Cevap doğru ise
+        else {
+            score = this.scoreService.handleCorrectAnswer(answerRequest.getUserId());
+  /*          getAnswerResponse.setCreatedAt(score.getCreatedAt());
+            getAnswerResponse.setPoint(score.getPoint());
+            getAnswerResponse.setNumberOfCorrectAnswer(score.getNumberOfCorrectAnswer());
+            getAnswerResponse.setUserId(score.getUser().getId());
+            getAnswerResponse.setUpdatedAt(score.getUpdatedAt());*/
+
+            return new SuccessDataResult<>(getAnswerResponses(score), Messages.Answer.rightAnswer);
 
 
-    }
-
-    public Result checkIfQuestionIsExist(int questionId) {
-
-        Answer currentAnswer = this.answerRepository.getAnswerById(questionId);
-
-        if (currentAnswer == null) {
-            return new ErrorResult(Messages.Answer.questionNotExist);
-        } else {
-            return new SuccessResult(Messages.Answer.rightAnswer);
-        }
-
-    }
-
-    public Result checkIfAnswerNameExist(String answerName) {
-
-        Answer currentAnswer = this.answerRepository.getAnswerByAnswerName(answerName);
-
-        if (currentAnswer == null) {
-            return new ErrorResult(Messages.Answer.answerWrong);
-        } else {
-            return new SuccessResult(Messages.Answer.rightAnswer);
         }
 
     }
+
+    //Builder
+    private GetAnswerResponse getAnswerResponses(Score score) {
+        return GetAnswerResponse.builder()
+                .userId(score.getUser().getId())
+                .point(score.getPoint())
+                .numberOfCorrectAnswer(score.getNumberOfCorrectAnswer())
+                .createdAt(score.getCreatedAt())
+                .updatedAt(score.getUpdatedAt())
+                .build();
+    }
+
 
 }

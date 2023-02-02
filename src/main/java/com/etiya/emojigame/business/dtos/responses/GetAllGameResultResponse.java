@@ -19,7 +19,6 @@ public class GetAllGameResultResponse {
 
     private String userName;
 
-    private Date totalTime;
 
 
 }

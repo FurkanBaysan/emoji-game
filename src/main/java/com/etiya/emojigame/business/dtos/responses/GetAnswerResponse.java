@@ -1,16 +1,18 @@
 package com.etiya.emojigame.business.dtos.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class GetAnswerResponse {
     private int numberOfCorrectAnswer;
     private int point;
     private int userId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

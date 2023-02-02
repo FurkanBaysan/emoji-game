@@ -12,6 +12,7 @@ import com.etiya.emojigame.entities.User;
 import com.etiya.emojigame.repositories.ScoreRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -24,32 +25,11 @@ public class ScoreManager implements ScoreService {
     }
 
     @Override
-    public Score calculateScore(int userId) {
+    public Score handleCorrectAnswer(int userId) {
 
-        Score score = this.scoreRepository.getScoreOfRelatedUser(userId);
-
-        if (score != null) {
-
-            score.setPoint(score.getPoint() + Enums.increasePoint);
-            score.setNumberOfCorrectAnswer(score.getPoint() / 20);
-            this.scoreRepository.save(score);
-            return score;
-        }
-
-        User user = new User();
-        user.setId(userId);
-
-        Score newUserScore = new Score();
-        newUserScore.setUser(user);
-        newUserScore.setPoint(Enums.initialPoint);
-        newUserScore.setNumberOfCorrectAnswer(0);
-
-        Score savedScore = this.scoreRepository.save(newUserScore);
-
+        Score savedScore = handleInitialOrWrongAnswer(userId);
         savedScore.setPoint(savedScore.getPoint() + Enums.increasePoint);
-        savedScore.setUser(user);
         savedScore.setNumberOfCorrectAnswer(savedScore.getPoint() / 20);
-
         return this.scoreRepository.save(savedScore);
 
     }
@@ -62,5 +42,27 @@ public class ScoreManager implements ScoreService {
                 Messages.User.usersAreListedAccordingToTheirPoints);
     }
 
+    @Override
+    public Score handleInitialOrWrongAnswer(int userId) {
+        Score currentScore = this.scoreRepository.getScoreOfRelatedUser(userId);
+
+        //Eğer Cevap yanlış ise
+        if (currentScore != null) {
+            currentScore.setUpdatedAt(LocalDateTime.now());
+            return this.scoreRepository.save(currentScore);
+        }
+        //Eğer ilk cevap ise
+        else {
+            User newUser = new User();
+            newUser.setId(userId);
+
+            Score newUserScore = new Score();
+            newUserScore.setUser(newUser);
+            newUserScore.setPoint(Enums.initialPoint);
+            newUserScore.setNumberOfCorrectAnswer(Enums.initialPoint);
+            return this.scoreRepository.save(newUserScore);
+        }
+
+    }
 
 }
