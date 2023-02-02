@@ -58,6 +58,7 @@ public class AnswerManager implements AnswerService {
             getAnswerResponse.setUserId(score.getUser().getId());
             getAnswerResponse.setUpdatedAt(score.getUpdatedAt());*/
 
+
             return new SuccessDataResult<>(getAnswerResponses(score), Messages.Answer.rightAnswer);
         }
     }
