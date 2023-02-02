@@ -38,7 +38,6 @@ public class Score {
     @Column(name = "update_at")
     private LocalDateTime updatedAt;
 
-
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();

@@ -37,7 +37,7 @@ public class AnswerManager implements AnswerService {
 
         Score score = new Score();
 
-        // Cevap yanlış ise
+        // ilk Cevap veya yanlış cevap  ise
         if (answer == null) {
             score = this.scoreService.handleInitialOrWrongAnswer(answerRequest.getUserId());
            /* getAnswerResponse.setCreatedAt(score.getCreatedAt());
