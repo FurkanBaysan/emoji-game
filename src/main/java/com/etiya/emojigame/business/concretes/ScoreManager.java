@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -31,6 +32,27 @@ public class ScoreManager implements ScoreService {
         savedScore.setPoint(savedScore.getPoint() + Enums.increasePoint);
         savedScore.setNumberOfCorrectAnswer(savedScore.getPoint() / 20);
         return this.scoreRepository.save(savedScore);
+    }
+
+    @Override
+    public Score handleInitialOrWrongAnswer(int userId) {
+        Score currentScore = this.scoreRepository.getScoreOfRelatedUser(userId);
+        //Eğer Cevap yanlış ise
+        if (currentScore != null) {
+            currentScore.setUpdatedAt(LocalDateTime.now());
+            return this.scoreRepository.save(currentScore);
+        }
+        //Eğer ilk cevap ise
+        else {
+            User newUser = new User();
+            newUser.setId(userId);
+
+            Score newUserScore = new Score();
+            newUserScore.setUser(newUser);
+            newUserScore.setPoint(Enums.initialPoint);
+            newUserScore.setNumberOfCorrectAnswer(Enums.initialPoint);
+            return this.scoreRepository.save(newUserScore);
+        }
 
     }
 
