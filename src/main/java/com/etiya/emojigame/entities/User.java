@@ -1,8 +1,10 @@
 package com.etiya.emojigame.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -20,6 +22,7 @@ public class User {
 
     @Column(name = "username")
     private String userName;
+
 
 
     @OneToOne(mappedBy = "user")

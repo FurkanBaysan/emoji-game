@@ -48,6 +48,7 @@ public class UserManager implements UserService {
         addUserResponse.setUserName(savedUser.getUserName());
         addUserResponse.setId(savedUser.getId());
 
+
         return new SuccessDataResult<AddUserResponse>(addUserResponse, Messages.User.userAdded);
 
     }
