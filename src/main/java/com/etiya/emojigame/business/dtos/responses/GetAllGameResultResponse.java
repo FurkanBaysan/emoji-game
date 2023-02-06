@@ -19,6 +19,8 @@ public class GetAllGameResultResponse {
 
     private String userName;
 
+    private int timer;
+
 
 
 }
