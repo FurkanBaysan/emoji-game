@@ -12,9 +12,8 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
     @Query("select s from Score as s where user_id=:userId")
     public Score getScoreOfRelatedUser(int userId);
 
-    @Query("select new com.etiya.emojigame.business.dtos.responses.GetAllGameResultResponse(s.point,u.userName) " +
-            "From Score as s " +
-            "inner join User as u on s.user=u " +
-            " order by s.point desc")
-    public List<GetAllGameResultResponse> getAllGameResults();
+    @Query(value = "select s.point,s.timer" +
+            " from scores s " +
+            "order by s.point desc, timer asc ",nativeQuery = true)
+    public List<Score> getAllGameResults();
 }
