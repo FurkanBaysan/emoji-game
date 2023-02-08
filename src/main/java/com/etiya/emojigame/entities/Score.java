@@ -28,6 +28,11 @@ public class Score {
     @Column(name = "correct_answer")
     private int numberOfCorrectAnswer;
 
+    @Column(name = "minute")
+    private double minute;
+
+    @Column(name = "second")
+    private double second;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -35,7 +40,7 @@ public class Score {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist
