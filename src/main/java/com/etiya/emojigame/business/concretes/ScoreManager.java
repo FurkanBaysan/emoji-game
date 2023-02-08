@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -59,13 +58,9 @@ public class ScoreManager implements ScoreService {
 
     @Override
     public DataResult<List<GetAllGameResultResponse>> getAllGameResult() {
-        List<Score> allGameResults = this.scoreRepository.getAllGameResults();
+        List<GetAllGameResultResponse> allGameResults = this.scoreRepository.getAllGameResults();
 
-        List<GetAllGameResultResponse> getAllGameResultResponse =allGameResults.stream().map(result->
-                new GetAllGameResultResponse(result.getPoint(), result.getUser().getUserName(),result.getTimer())
-                ).toList();
-
-        return new SuccessDataResult<List<GetAllGameResultResponse>>(getAllGameResultResponse,
+        return new SuccessDataResult<List<GetAllGameResultResponse>>(allGameResults,
                 Messages.User.usersAreListedAccordingToTheirPoints);
     }
 

@@ -33,6 +33,7 @@ public class UserManager implements UserService {
 
     @Override
     @Transactional
+
     public DataResult<AddUserResponse> addUser(AddUserRequest addUserRequest) {
 
         User user = new User();
