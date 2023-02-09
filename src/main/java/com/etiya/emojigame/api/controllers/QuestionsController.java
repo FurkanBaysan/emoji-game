@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "questions/")
+@CrossOrigin(origins = "*")
 public class QuestionsController {
     private QuestionService questionService;
 

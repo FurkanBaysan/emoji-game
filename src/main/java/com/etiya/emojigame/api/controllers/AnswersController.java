@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "answers/")
+@CrossOrigin(origins = "*")
 public class AnswersController {
     private AnswerService answerService;
 
