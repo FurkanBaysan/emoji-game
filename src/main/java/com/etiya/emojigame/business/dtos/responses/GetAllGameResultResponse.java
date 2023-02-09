@@ -15,7 +15,7 @@ import java.util.Date;
 public class GetAllGameResultResponse {
 
 
-    private double minute;
+
     private double second;
     private int point;
 
