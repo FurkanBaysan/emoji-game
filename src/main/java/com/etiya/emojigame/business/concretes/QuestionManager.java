@@ -1,5 +1,6 @@
 package com.etiya.emojigame.business.concretes;
 
+import com.etiya.emojigame.business.abstracts.AnswerService;
 import com.etiya.emojigame.business.abstracts.EmojiService;
 import com.etiya.emojigame.business.abstracts.QuestionService;
 import com.etiya.emojigame.business.constants.Messages;
@@ -11,9 +12,11 @@ import com.etiya.emojigame.core.utils.results.DataResult;
 import com.etiya.emojigame.core.utils.results.Result;
 import com.etiya.emojigame.core.utils.results.SuccessDataResult;
 import com.etiya.emojigame.core.utils.results.SuccessResult;
+import com.etiya.emojigame.entities.Answer;
 import com.etiya.emojigame.entities.Emoji;
 import com.etiya.emojigame.entities.Question;
 import com.etiya.emojigame.repositories.QuestionRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,10 +31,13 @@ public class QuestionManager implements QuestionService {
     private EmojiService emojiService;
     private ModelMapperService modelMapperService;
 
-    public QuestionManager(QuestionRepository questionRepository, EmojiService emojiService, ModelMapperService modelMapperService) {
+    private AnswerService answerService;
+
+    public QuestionManager(QuestionRepository questionRepository, EmojiService emojiService, ModelMapperService modelMapperService, @Lazy AnswerService answerService) {
         this.questionRepository = questionRepository;
         this.emojiService = emojiService;
         this.modelMapperService = modelMapperService;
+        this.answerService = answerService;
     }
 
     @Override
@@ -83,27 +89,36 @@ public class QuestionManager implements QuestionService {
     public Result addQuestion(AddEmojiRequest addEmojiRequest) {
 
         Question question = new Question();
+        Question savedQuestion = this.questionRepository.save(question);
+        //question.setId(addEmojiRequest.getQuestionId());
 
-        //Emoji emoji = this.modelMapperService.getMapperForRequest().map(addEmojiRequest, Emoji.class);
+        Answer answer = new Answer();
+        answer.setQuestion(savedQuestion);
+        answer.setName(addEmojiRequest.getAnswer());
 
 
-        //request => entity mapping
+        List<Emoji> emojis = new ArrayList<>();
 
+        for (int i = 0; i < addEmojiRequest.getImageUrls().size(); i++) {
+            Emoji emoji = new Emoji();
+            emoji.setImageUrl(addEmojiRequest.getImageUrls().get(i));
+            emoji.setQuestion(savedQuestion);
+            emojis.add(emoji);
+        }
 
-        //TODO: Panel yapısı üzerinden Manuel-Mapping'e çevrilmeli.
-        List<Emoji> emojis = addEmojiRequest.getImageUrls().stream().map(emoji -> this.modelMapperService.getMapperForRequest().map(emoji, Emoji.class)).collect(Collectors.toList());
 
         for (Emoji emoji : emojis) {
             this.emojiService.save(emoji);
         }
 
-
-        question.setId(addEmojiRequest.getQuestionId());
-        question.setEmojis(emojis);
-
+        savedQuestion.setId(savedQuestion.getId());
+        savedQuestion.setEmojis(emojis);
+        Answer responseAnswer = this.answerService.save(answer);
+        savedQuestion.setAnswer(responseAnswer);
         //question.setImageUrl(addEmojiRequest.getImageUrl());
 
-        this.questionRepository.save(question);
+
+        this.questionRepository.save(savedQuestion);
 
         return new SuccessResult(Messages.Question.emojisForRelatedQuestionSuccessfullyAdded);
 

@@ -76,4 +76,11 @@ public class AnswerManager implements AnswerService {
     }
 
 
+    @Override
+    public Answer save(Answer answer) {
+        Answer response = this.answerRepository.save(answer);
+        return response;
+    }
+
+
 }

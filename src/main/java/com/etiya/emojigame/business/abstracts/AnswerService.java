@@ -9,4 +9,6 @@ import com.etiya.emojigame.entities.Answer;
 public interface AnswerService {
     public DataResult<GetAnswerResponse> getAnswer(GetAnswerRequest getAnswerRequest);
 
+    public Answer save(Answer answer);
+
 }

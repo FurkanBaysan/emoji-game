@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 public class AddEmojiRequest {
-    private int questionId;
+    //private int questionId;
     private List<String> imageUrls;
+    private String answer;
 }
