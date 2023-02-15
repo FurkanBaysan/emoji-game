@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "answers/")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:8080/")
 public class AnswersController {
     private AnswerService answerService;
 
@@ -18,7 +18,7 @@ public class AnswersController {
         this.answerService = answerService;
     }
 
-    @PostMapping("getAnswer")
+    @PostMapping("get-answer")
     public Result getAnswer(@RequestBody GetAnswerRequest answerRequest) {
         return this.answerService.getAnswer(answerRequest);
     }

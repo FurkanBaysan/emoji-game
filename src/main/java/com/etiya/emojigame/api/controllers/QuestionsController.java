@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "questions/")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:8080/")
 public class QuestionsController {
     private QuestionService questionService;
 
@@ -22,17 +22,17 @@ public class QuestionsController {
         this.questionService = questionService;
     }
 
-    @GetMapping("getEmojisForRelatedQuestion")
+    @GetMapping("get-emojis-for-related-question")
     public DataResult<List<GetEmojiResponse>> getEmojisForRelatedQuestion(@RequestParam int questionId) {
         return this.questionService.getEmojisForRelatedQuestion(questionId);
     }
 
-    @PostMapping("addQuestion")
+    @PostMapping("add-question")
     public Result addQuestion(@RequestBody AddEmojiRequest addEmojiRequest) {
         return this.questionService.addQuestion(addEmojiRequest);
     }
 
-    @GetMapping("getAllQuestions")
+    @GetMapping("get-all-questions")
     public DataResult<List<GetQuestionResponse>> getAllQuestions() {
         return this.questionService.getAllQuestions();
     }

@@ -30,7 +30,6 @@ public class QuestionManager implements QuestionService {
     private QuestionRepository questionRepository;
     private EmojiService emojiService;
     private ModelMapperService modelMapperService;
-
     private AnswerService answerService;
 
     public QuestionManager(QuestionRepository questionRepository, EmojiService emojiService, ModelMapperService modelMapperService, @Lazy AnswerService answerService) {
@@ -83,7 +82,6 @@ public class QuestionManager implements QuestionService {
         return this.questionRepository.findAll();
     }
 
-
     @Override
     @Transactional
     public Result addQuestion(AddEmojiRequest addEmojiRequest) {
@@ -96,7 +94,6 @@ public class QuestionManager implements QuestionService {
         answer.setQuestion(savedQuestion);
         answer.setName(addEmojiRequest.getAnswer());
 
-
         List<Emoji> emojis = new ArrayList<>();
 
         for (int i = 0; i < addEmojiRequest.getImageUrls().size(); i++) {
@@ -105,7 +102,6 @@ public class QuestionManager implements QuestionService {
             emoji.setQuestion(savedQuestion);
             emojis.add(emoji);
         }
-
 
         for (Emoji emoji : emojis) {
             this.emojiService.save(emoji);
@@ -117,11 +113,9 @@ public class QuestionManager implements QuestionService {
         savedQuestion.setAnswer(responseAnswer);
         //question.setImageUrl(addEmojiRequest.getImageUrl());
 
-
         this.questionRepository.save(savedQuestion);
 
         return new SuccessResult(Messages.Question.emojisForRelatedQuestionSuccessfullyAdded);
-
 
     }
 }

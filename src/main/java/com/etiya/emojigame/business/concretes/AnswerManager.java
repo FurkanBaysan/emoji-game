@@ -17,14 +17,12 @@ import org.springframework.stereotype.Service;
 public class AnswerManager implements AnswerService {
 
     private AnswerRepository answerRepository;
-    private QuestionService questionService;
 
     private ScoreService scoreService;
 
     @Autowired
-    public AnswerManager(AnswerRepository answerRepository, QuestionService questionService, ScoreService scoreService) { // DI
+    public AnswerManager(AnswerRepository answerRepository, ScoreService scoreService) { // DI
         this.answerRepository = answerRepository;
-        this.questionService = questionService;
         this.scoreService = scoreService;
     }
 
@@ -40,22 +38,12 @@ public class AnswerManager implements AnswerService {
         // ilk Cevap veya yanlış cevap  ise
         if (answer == null) {
             score = this.scoreService.handleInitialOrWrongAnswer(answerRequest.getUserId());
-           /* getAnswerResponse.setCreatedAt(score.getCreatedAt());
-            getAnswerResponse.setPoint(score.getPoint());
-            getAnswerResponse.setNumberOfCorrectAnswer(score.getNumberOfCorrectAnswer());
-            getAnswerResponse.setUserId(score.getUser().getId());
-            getAnswerResponse.setUpdatedAt(score.getUpdatedAt());*/
 
             return new ErrorDataResult<>(getAnswerResponses(score), Messages.Answer.answerWrong);
         }
         // Cevap doğru ise
         else {
             score = this.scoreService.handleCorrectAnswer(answerRequest.getUserId());
-  /*          getAnswerResponse.setCreatedAt(score.getCreatedAt());
-            getAnswerResponse.setPoint(score.getPoint());
-            getAnswerResponse.setNumberOfCorrectAnswer(score.getNumberOfCorrectAnswer());
-            getAnswerResponse.setUserId(score.getUser().getId());
-            getAnswerResponse.setUpdatedAt(score.getUpdatedAt());*/
 
             return new SuccessDataResult<>(getAnswerResponses(score), Messages.Answer.rightAnswer);
 

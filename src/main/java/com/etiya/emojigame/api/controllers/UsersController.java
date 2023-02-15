@@ -12,18 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(Paths.apiPrefix + "Users/")
-@CrossOrigin(origins = "*")
+@RequestMapping(Paths.apiPrefix + "users/")
+@CrossOrigin(origins = "http://localhost:8080/")
 public class UsersController {
-
     private UserService userService;
-
 
     public UsersController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping("addUser")
+    @PostMapping("add-user")
     public ResponseEntity<DataResult<AddUserResponse>> addUser(@RequestBody @Valid AddUserRequest addUserRequest) {
         DataResult<AddUserResponse> addUserResponse = this.userService.addUser(addUserRequest);
         return new ResponseEntity<DataResult<AddUserResponse>>(addUserResponse, HttpStatus.CREATED);

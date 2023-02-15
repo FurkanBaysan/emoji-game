@@ -27,12 +27,7 @@ public class Score {
 
     @Column(name = "correct_answer")
     private int numberOfCorrectAnswer;
-
-    @Column(name = "minute")
-    private double minute;
-
-    @Column(name = "second")
-    private double second;
+    
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
