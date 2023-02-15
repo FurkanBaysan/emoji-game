@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(Paths.apiPrefix + "Scores/")
-@CrossOrigin(origins = "*")
+@RequestMapping(Paths.apiPrefix + "scores/")
+@CrossOrigin(origins = "http://localhost:8080/")
 public class ScoresController {
     private ScoreService scoreService;
 
@@ -22,7 +22,7 @@ public class ScoresController {
     }
 
     // End-Point for => listing users according to their points situation
-    @GetMapping("getAllGameResult")
+    @GetMapping("get-all-game-result")
     public DataResult<List<GetAllGameResultResponse>> getAllGameResult() {
         return this.scoreService.getAllGameResult();
     }
