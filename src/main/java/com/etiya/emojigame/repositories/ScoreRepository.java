@@ -14,11 +14,18 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
     public Score getScoreOfRelatedUser(int userId);
 
 
-    @Query(value =  "Select new com.etiya.emojigame.business.dtos.responses.GetAllGameResultResponse( " +
+    @Query(value = "Select new com.etiya.emojigame.business.dtos.responses.GetAllGameResultResponse( " +
 
             "  round (date_part('epoch', s.updatedAt ) - date_part('epoch', s.createdAt )   ), s.point, u.userName)" +
             " from Score s inner join s.user u  " +
             "  order by s.point desc  , (date_part('epoch', s.updatedAt ) - date_part('epoch', s.createdAt )) asc")
 
     public List<GetAllGameResultResponse> getAllGameResults();
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "delete from scores", nativeQuery = true)
+    public void deleteAllScoreRecords();
 }
+
+

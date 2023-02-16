@@ -7,5 +7,7 @@ import com.etiya.emojigame.core.utils.results.DataResult;
 public interface UserService {
     DataResult<AddUserResponse> addUser(AddUserRequest addUserRequest);
 
+    public void job();
+
 
 }

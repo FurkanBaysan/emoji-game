@@ -1,5 +1,6 @@
 package com.etiya.emojigame.business.concretes;
 
+import com.etiya.emojigame.EmojigameApplication;
 import com.etiya.emojigame.business.abstracts.UserService;
 import com.etiya.emojigame.business.constants.Messages;
 import com.etiya.emojigame.business.dtos.requests.AddUserRequest;
@@ -12,10 +13,14 @@ import com.etiya.emojigame.core.utils.results.SuccessDataResult;
 import com.etiya.emojigame.core.utils.results.SuccessResult;
 import com.etiya.emojigame.entities.User;
 import com.etiya.emojigame.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 
@@ -24,6 +29,8 @@ public class UserManager implements UserService {
 
     private UserRepository userRepository;
     private MessageService messageService;
+
+    Logger logger = LoggerFactory.getLogger(EmojigameApplication.class);
 
     @Autowired
     public UserManager(UserRepository userRepository, MessageService messageService) { //DI
@@ -60,6 +67,29 @@ public class UserManager implements UserService {
         if (user != null) {
             throw new BusinessException(Messages.User.userAlreadyExist);
         }
+
+    }
+
+    public void saveUser(User user) {
+        this.userRepository.save(user);
+    }
+
+
+    @Override
+    @Scheduled(cron = "0 55 14 ? * *")
+    public void job() {
+
+        this.logger.info("Log Current Time: " + new Date());
+
+        User user = new User();
+        user.setUserName("UserThatAddedWithCronJob");
+
+        UserManager userManager = new UserManager(userRepository, messageService);
+
+        //userManager.saveUser(user);
+        //saveUser(user);
+
+        this.userRepository.deleteAllUserRecords();
 
     }
 

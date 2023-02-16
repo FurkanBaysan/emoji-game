@@ -13,4 +13,6 @@ public interface ScoreService {
     public DataResult<List<GetAllGameResultResponse>> getAllGameResult();
 
     public Score handleInitialOrWrongAnswer(int userId);
+
+    public void job();
 }
