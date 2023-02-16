@@ -1,10 +1,9 @@
 package com.etiya.emojigame.entities;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+
 
 @Entity
 @Table(name = "users")
@@ -23,8 +22,8 @@ public class User {
     private String userName;
 
 
-
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Score score;
 
 }

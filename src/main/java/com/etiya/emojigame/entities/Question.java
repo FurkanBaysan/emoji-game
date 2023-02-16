@@ -23,11 +23,9 @@ public class Question {
     @Column(name = "id")
     private int id;
 
-
     @OneToMany(mappedBy = "question")
     @JsonIgnore
     private List<Emoji> emojis;
-
 
     @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
     @JsonIgnore
