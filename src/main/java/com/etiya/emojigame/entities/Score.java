@@ -28,8 +28,8 @@ public class Score {
     @Column(name = "correct_answer")
     private int numberOfCorrectAnswer;
     
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "user_id",  referencedColumnName = "id" )
     private User user;
 
     @Column(name = "created_at")
