@@ -2,8 +2,6 @@ package com.etiya.emojigame;
 
 import com.etiya.emojigame.business.abstracts.UserService;
 import com.etiya.emojigame.business.concretes.UserManager;
-import com.etiya.emojigame.core.utils.configuration.deletionJob.DeletionJob;
-import com.etiya.emojigame.core.utils.configuration.deletionJob.IDeletionJob;
 import com.etiya.emojigame.core.utils.exceptions.BusinessException;
 import com.etiya.emojigame.core.utils.messages.MessageService;
 import com.etiya.emojigame.core.utils.results.ErrorDataResult;
@@ -32,6 +30,7 @@ import java.util.Map;
 
 @SpringBootApplication
 @RestControllerAdvice
+@EnableScheduling
 public class EmojigameApplication {
     public static void main(String[] args) {
         SpringApplication.run(EmojigameApplication.class, args);

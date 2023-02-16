@@ -10,6 +10,7 @@ import com.etiya.emojigame.core.utils.results.SuccessDataResult;
 import com.etiya.emojigame.entities.Score;
 import com.etiya.emojigame.entities.User;
 import com.etiya.emojigame.repositories.ScoreRepository;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.Random;
 
 
 @Service
+@EnableScheduling
 public class ScoreManager implements ScoreService {
     private ScoreRepository scoreRepository;
 
@@ -71,13 +73,13 @@ public class ScoreManager implements ScoreService {
     }
 
     @Override
-    @Scheduled(cron = "0 55 14 ? * *")
+   // @Scheduled(cron = "0 27 16 ? * *")
     public void job() {
         //this.logger.info("Log Current Time: " + new Date());
 
         Score score = new Score();
 
-        this.scoreRepository.deleteAllScoreRecords();
+        //this.scoreRepository.deleteAllScoreRecords();
 
 
     }

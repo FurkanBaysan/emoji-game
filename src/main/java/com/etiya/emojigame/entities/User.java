@@ -24,7 +24,7 @@ public class User {
 
 
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private Score score;
 
 }

@@ -16,6 +16,7 @@ import com.etiya.emojigame.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.util.regex.Pattern;
 
 
 @Service
+@EnableScheduling
 public class UserManager implements UserService {
 
     private UserRepository userRepository;
@@ -76,7 +78,7 @@ public class UserManager implements UserService {
 
 
     @Override
-    @Scheduled(cron = "0 55 14 ? * *")
+    @Scheduled(cron = "0 39 16 ? * *")
     public void job() {
 
         this.logger.info("Log Current Time: " + new Date());
@@ -89,7 +91,8 @@ public class UserManager implements UserService {
         //userManager.saveUser(user);
         //saveUser(user);
 
-        this.userRepository.deleteAllUserRecords();
+        //this.userRepository.deleteAllUserRecords();
+        this.userRepository.deleteAll();
 
     }
 
