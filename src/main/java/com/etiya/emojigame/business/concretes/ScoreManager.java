@@ -5,6 +5,7 @@ import com.etiya.emojigame.business.abstracts.ScoreService;
 import com.etiya.emojigame.business.constants.Enums;
 import com.etiya.emojigame.business.constants.Messages;
 import com.etiya.emojigame.business.dtos.responses.GetAllGameResultResponse;
+import com.etiya.emojigame.core.utils.messages.MessageService;
 import com.etiya.emojigame.core.utils.results.DataResult;
 import com.etiya.emojigame.core.utils.results.SuccessDataResult;
 import com.etiya.emojigame.entities.Score;
@@ -24,9 +25,11 @@ import java.util.Random;
 @EnableScheduling
 public class ScoreManager implements ScoreService {
     private ScoreRepository scoreRepository;
+    private MessageService messageService;
 
-    public ScoreManager(ScoreRepository scoreRepository) {
+    public ScoreManager(ScoreRepository scoreRepository, MessageService messageService) {
         this.scoreRepository = scoreRepository;
+        this.messageService = messageService;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class ScoreManager implements ScoreService {
             newUserScore.setUser(newUser);
             newUserScore.setPoint(Enums.initialPoint);
             newUserScore.setNumberOfCorrectAnswer(Enums.initialPoint);
+            newUserScore.setUpdatedAt(LocalDateTime.now());
             return this.scoreRepository.save(newUserScore);
         }
 
@@ -65,7 +69,7 @@ public class ScoreManager implements ScoreService {
         List<GetAllGameResultResponse> allGameResults = this.scoreRepository.getAllGameResults();
 
         return new SuccessDataResult<List<GetAllGameResultResponse>>(allGameResults,
-                Messages.User.usersAreListedAccordingToTheirPoints);
+                this.messageService.getMessage(Messages.User.usersAreListedAccordingToTheirPointsAndTimes));
     }
 
     public void saveScore(Score score) {
@@ -73,7 +77,7 @@ public class ScoreManager implements ScoreService {
     }
 
     @Override
-   // @Scheduled(cron = "0 27 16 ? * *")
+    // @Scheduled(cron = "0 27 16 ? * *")
     public void job() {
         //this.logger.info("Log Current Time: " + new Date());
 

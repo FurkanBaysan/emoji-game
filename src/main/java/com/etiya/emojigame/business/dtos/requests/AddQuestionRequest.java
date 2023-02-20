@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddEmojiRequest {
-    //private int questionId;
-    private List<String> imageUrls;
+public class AddQuestionRequest {
+    private String category;
     private String answer;
+    private List<String> imageUrls;
 }

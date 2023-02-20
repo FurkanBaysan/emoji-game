@@ -14,5 +14,6 @@ import java.util.List;
 @Setter
 public class GetQuestionResponse {
     private int id;
+    private String category;
     private List<GetEmojiResponse> getEmojiResponses;
 }

@@ -31,4 +31,10 @@ public class Question {
     @JsonIgnore
     private Answer answer;
 
+    //Category category => column
+
+    @Column(name = "category")
+    @JsonIgnore
+    private String category;
+
 }

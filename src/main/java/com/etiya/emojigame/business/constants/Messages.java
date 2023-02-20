@@ -12,28 +12,30 @@ public class Messages {
 
 
     public static class User {
-        public static final String userNotExists = "User not found";
+        public static final String userNotExists = "userNotExists";
 
-        public static final String getAllUsers = "All users fetched from database";
-        public static final String userAdded = "user successfully added to the database";
-        public static final String userAlreadyExist = "user already exist with same name";
-        public static final String userNameMustContainLetters = "username must be contain letters";
+        public static final String getAllUsers = "getAllUsers";
+        public static final String userAdded = "userAdded";
+        public static final String userAlreadyExist = "userAlreadyExist";
+        public static final String userNameMustContainLetters = "userNameMustContainLetters";
 
-        public static final String usersAreListedAccordingToTheirPoints="all users are fetched successfully";
+        public static final String usersAreListedAccordingToTheirPointsAndTimes = "usersAreListedAccordingToTheirPointsAndTimes";
 
     }
 
     public static class Question {
-        public static final String emojisForRelatedQuestionSuccessfullyFetched = "emojis for related question successfully fetched";
-        public static final String emojisForRelatedQuestionSuccessfullyAdded = "emojis for related question successfully added";
+        public static final String emojisForRelatedQuestionSuccessfullyFetched = "emojisForRelatedQuestionSuccessfullyFetched";
+        public static final String emojisForRelatedQuestionSuccessfullyAdded = "emojisForRelatedQuestionSuccessfullyAdded";
 
-        public static final String allEmojisForAllQuestionsSuccessfullyFetched = "all emojis for all questions are successfully fetched";
+        public static final String allEmojisForAllQuestionsSuccessfullyFetched = "allEmojisForAllQuestionsSuccessfullyFetched";
+
+        public static final String allQuestionAreFetchedAccordingToTheirCategory = "allQuestionAreFetchedAccordingToTheirCategory";
     }
 
     public static class Answer {
-        public static final String answerWrong = "wrong answer";
-        public static final String rightAnswer = "answer is correct";
-        public static final String questionNotExist = "Question not exist";
+        public static final String answerWrong = "answerWrong";
+        public static final String rightAnswer = "rightAnswer";
+        public static final String questionNotExist = "questionNotExist";
     }
 
 }

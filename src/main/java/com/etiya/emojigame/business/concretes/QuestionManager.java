@@ -4,10 +4,12 @@ import com.etiya.emojigame.business.abstracts.AnswerService;
 import com.etiya.emojigame.business.abstracts.EmojiService;
 import com.etiya.emojigame.business.abstracts.QuestionService;
 import com.etiya.emojigame.business.constants.Messages;
-import com.etiya.emojigame.business.dtos.requests.AddEmojiRequest;
+import com.etiya.emojigame.business.dtos.requests.AddQuestionRequest;
 import com.etiya.emojigame.business.dtos.responses.GetEmojiResponse;
 import com.etiya.emojigame.business.dtos.responses.GetQuestionResponse;
+import com.etiya.emojigame.core.utils.exceptions.BusinessException;
 import com.etiya.emojigame.core.utils.mapping.ModelMapperService;
+import com.etiya.emojigame.core.utils.messages.MessageService;
 import com.etiya.emojigame.core.utils.results.DataResult;
 import com.etiya.emojigame.core.utils.results.Result;
 import com.etiya.emojigame.core.utils.results.SuccessDataResult;
@@ -31,12 +33,14 @@ public class QuestionManager implements QuestionService {
     private EmojiService emojiService;
     private ModelMapperService modelMapperService;
     private AnswerService answerService;
+    private MessageService messageService;
 
-    public QuestionManager(QuestionRepository questionRepository, EmojiService emojiService, ModelMapperService modelMapperService, @Lazy AnswerService answerService) {
+    public QuestionManager(QuestionRepository questionRepository, EmojiService emojiService, ModelMapperService modelMapperService, @Lazy AnswerService answerService, MessageService messageService) {
         this.questionRepository = questionRepository;
         this.emojiService = emojiService;
         this.modelMapperService = modelMapperService;
         this.answerService = answerService;
+        this.messageService = messageService;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class QuestionManager implements QuestionService {
                 .map(emoji, GetEmojiResponse.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<GetEmojiResponse>>(emojiResponses,
-                Messages.Question.emojisForRelatedQuestionSuccessfullyFetched);
+                this.messageService.getMessage(Messages.Question.emojisForRelatedQuestionSuccessfullyFetched));
     }
 
 
@@ -67,13 +71,14 @@ public class QuestionManager implements QuestionService {
 
             getQuestionResponse.setId(question.getId());
             getQuestionResponse.setGetEmojiResponses(emojiResponses.getData());
+            getQuestionResponse.setCategory(question.getCategory());
 
             getQuestionResponses.add(getQuestionResponse);
 
         }
 
         return new SuccessDataResult<List<GetQuestionResponse>>(getQuestionResponses,
-                Messages.Question.allEmojisForAllQuestionsSuccessfullyFetched);
+                this.messageService.getMessage(Messages.Question.allEmojisForAllQuestionsSuccessfullyFetched));
 
     }
 
@@ -84,7 +89,7 @@ public class QuestionManager implements QuestionService {
 
     @Override
     @Transactional
-    public Result addQuestion(AddEmojiRequest addEmojiRequest) {
+    public Result addQuestion(AddQuestionRequest addQuestionRequest) {
 
         Question question = new Question();
         Question savedQuestion = this.questionRepository.save(question);
@@ -92,13 +97,13 @@ public class QuestionManager implements QuestionService {
 
         Answer answer = new Answer();
         answer.setQuestion(savedQuestion);
-        answer.setName(addEmojiRequest.getAnswer());
+        answer.setName(addQuestionRequest.getAnswer());
 
         List<Emoji> emojis = new ArrayList<>();
 
-        for (int i = 0; i < addEmojiRequest.getImageUrls().size(); i++) {
+        for (int i = 0; i < addQuestionRequest.getImageUrls().size(); i++) {
             Emoji emoji = new Emoji();
-            emoji.setImageUrl(addEmojiRequest.getImageUrls().get(i));
+            emoji.setImageUrl(addQuestionRequest.getImageUrls().get(i));
             emoji.setQuestion(savedQuestion);
             emojis.add(emoji);
         }
@@ -111,11 +116,46 @@ public class QuestionManager implements QuestionService {
         savedQuestion.setEmojis(emojis);
         Answer responseAnswer = this.answerService.save(answer);
         savedQuestion.setAnswer(responseAnswer);
-        //question.setImageUrl(addEmojiRequest.getImageUrl());
+        savedQuestion.setCategory(addQuestionRequest.getCategory());
 
         this.questionRepository.save(savedQuestion);
 
-        return new SuccessResult(Messages.Question.emojisForRelatedQuestionSuccessfullyAdded);
+        return new SuccessResult(this.messageService.getMessage(Messages.Question.emojisForRelatedQuestionSuccessfullyAdded));
 
     }
+
+
+    @Override
+    public DataResult<List<GetQuestionResponse>> getRelatedQuestionByItsCategory(String category) {
+        List<Question> questionsByTheirCategory = this.questionRepository.getRelatedQuestionByItsCategory(category);
+
+        isQuestionExistInRelatedCategory(questionsByTheirCategory);
+
+        List<GetQuestionResponse> questionResponses = new ArrayList<>();
+
+        for (Question question : questionsByTheirCategory) {
+
+            DataResult<List<GetEmojiResponse>> emojiResponses = getEmojisForRelatedQuestion(question.getId());
+
+            GetQuestionResponse questionResponse = new GetQuestionResponse();
+
+            questionResponse.setId(question.getId());
+            questionResponse.setCategory(question.getCategory());
+            questionResponse.setGetEmojiResponses(emojiResponses.getData());
+
+            questionResponses.add(questionResponse);
+        }
+
+        return new SuccessDataResult<List<GetQuestionResponse>>(questionResponses,
+                this.messageService.getMessage(Messages.Question.allQuestionAreFetchedAccordingToTheirCategory));
+
+    }
+
+    private void isQuestionExistInRelatedCategory(List<Question> questions) {
+        if (questions.size() == 0) {
+            throw new BusinessException("there is no question corresponding with this category");
+        }
+    }
+
+
 }

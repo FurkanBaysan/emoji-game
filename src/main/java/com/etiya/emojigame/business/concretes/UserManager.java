@@ -59,7 +59,7 @@ public class UserManager implements UserService {
         addUserResponse.setId(savedUser.getId());
 
 
-        return new SuccessDataResult<AddUserResponse>(addUserResponse, Messages.User.userAdded);
+        return new SuccessDataResult<AddUserResponse>(addUserResponse, this.messageService.getMessage(Messages.User.userAdded));
 
     }
 
@@ -67,7 +67,7 @@ public class UserManager implements UserService {
         User user = this.userRepository.findByUserName(userName);
 
         if (user != null) {
-            throw new BusinessException(Messages.User.userAlreadyExist);
+            throw new BusinessException(this.messageService.getMessage(Messages.User.userAlreadyExist));
         }
 
     }

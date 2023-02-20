@@ -2,12 +2,11 @@ package com.etiya.emojigame.api.controllers;
 
 import com.etiya.emojigame.business.abstracts.QuestionService;
 import com.etiya.emojigame.business.constants.Paths;
-import com.etiya.emojigame.business.dtos.requests.AddEmojiRequest;
+import com.etiya.emojigame.business.dtos.requests.AddQuestionRequest;
 import com.etiya.emojigame.business.dtos.responses.GetEmojiResponse;
 import com.etiya.emojigame.business.dtos.responses.GetQuestionResponse;
 import com.etiya.emojigame.core.utils.results.DataResult;
 import com.etiya.emojigame.core.utils.results.Result;
-import com.etiya.emojigame.entities.Question;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,13 +27,18 @@ public class QuestionsController {
     }
 
     @PostMapping("add-question")
-    public Result addQuestion(@RequestBody AddEmojiRequest addEmojiRequest) {
-        return this.questionService.addQuestion(addEmojiRequest);
+    public Result addQuestion(@RequestBody AddQuestionRequest addQuestionRequest) {
+        return this.questionService.addQuestion(addQuestionRequest);
     }
 
     @GetMapping("get-all-questions")
     public DataResult<List<GetQuestionResponse>> getAllQuestions() {
         return this.questionService.getAllQuestions();
+    }
+
+    @GetMapping("get-related-question-by-its-category")
+    public DataResult<List<GetQuestionResponse>> getRelatedQuestionByItsCategory(@RequestParam String category) {
+        return this.questionService.getRelatedQuestionByItsCategory(category);
     }
 
 }
