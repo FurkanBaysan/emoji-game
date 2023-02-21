@@ -65,7 +65,7 @@ public class AnswerManager implements AnswerService {
                 .userId(score.getUser().getId())
                 .point(score.getPoint())
                 .numberOfCorrectAnswer(score.getNumberOfCorrectAnswer())
-                .createdAt(score.getCreatedAt())
+                .createdAt(score.getUser().getCreatedAt())
                 .updatedAt(score.getUpdatedAt())
                 .build();
     }

@@ -25,7 +25,7 @@ public class Messages {
 
     public static class Question {
         public static final String emojisForRelatedQuestionSuccessfullyFetched = "emojisForRelatedQuestionSuccessfullyFetched";
-        public static final String emojisForRelatedQuestionSuccessfullyAdded = "emojisForRelatedQuestionSuccessfullyAdded";
+        public static final String relatedQuestionSuccessfullyAdded = "relatedQuestionSuccessfullyAdded";
 
         public static final String allEmojisForAllQuestionsSuccessfullyFetched = "allEmojisForAllQuestionsSuccessfullyFetched";
 

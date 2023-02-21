@@ -119,7 +119,7 @@ public class QuestionManager implements QuestionService {
 
         this.questionRepository.save(savedQuestion);
 
-        return new SuccessResult(this.messageService.getMessage(Messages.Question.emojisForRelatedQuestionSuccessfullyAdded));
+        return new SuccessResult(this.messageService.getMessage(Messages.Question.relatedQuestionSuccessfullyAdded));
 
     }
 

@@ -17,9 +17,9 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
 
     @Query(value = "Select new com.etiya.emojigame.business.dtos.responses.GetAllGameResultResponse( " +
 
-            "  round (date_part('epoch', s.updatedAt ) - date_part('epoch', s.createdAt )   ), s.point, u.userName)" +
+            "  round (date_part('epoch', s.updatedAt ) - date_part('epoch', u.createdAt )   ), s.point, u.userName)" +
             " from Score s inner join s.user u  " +
-            "  order by s.point desc  , (date_part('epoch', s.updatedAt ) - date_part('epoch', s.createdAt )) asc")
+            "  order by s.point desc  , (date_part('epoch', s.updatedAt ) - date_part('epoch', u.createdAt )) asc")
 
     public List<GetAllGameResultResponse> getAllGameResults();
 
