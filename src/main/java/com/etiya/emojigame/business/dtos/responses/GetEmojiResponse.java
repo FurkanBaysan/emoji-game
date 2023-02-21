@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GetEmojiResponse {
+    private String category;
     private int id;
     private String imageUrl;
     private int questionId;
