@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "scores/")
-@CrossOrigin(origins = "http://localhost:8080/")
+@CrossOrigin(origins = {"http://localhost:8082/","https://localhost:8082/","https://emojigame.etiyadim.com/"})
 public class ScoresController {
     private ScoreService scoreService;
 

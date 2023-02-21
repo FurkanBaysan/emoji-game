@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class AnswerManager implements AnswerService {
 
     private AnswerRepository answerRepository;
-
     private ScoreService scoreService;
     private MessageService messageService;
 
@@ -50,9 +49,14 @@ public class AnswerManager implements AnswerService {
 
             return new SuccessDataResult<>(getAnswerResponses(score), this.messageService.getMessage(Messages.Answer.rightAnswer));
 
-
         }
 
+    }
+
+    @Override
+    public Answer save(Answer answer) {
+        Answer response = this.answerRepository.save(answer);
+        return response;
     }
 
     //Builder
@@ -65,13 +69,5 @@ public class AnswerManager implements AnswerService {
                 .updatedAt(score.getUpdatedAt())
                 .build();
     }
-
-
-    @Override
-    public Answer save(Answer answer) {
-        Answer response = this.answerRepository.save(answer);
-        return response;
-    }
-
 
 }

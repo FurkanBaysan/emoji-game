@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "users/")
-@CrossOrigin(origins = "http://localhost:8080/")
+@CrossOrigin(origins = {"http://localhost:8082/","https://localhost:8082/","https://emojigame.etiyadim.com/"})
 public class UsersController {
     private UserService userService;
 
@@ -26,6 +26,4 @@ public class UsersController {
         DataResult<AddUserResponse> addUserResponse = this.userService.addUser(addUserRequest);
         return new ResponseEntity<DataResult<AddUserResponse>>(addUserResponse, HttpStatus.CREATED);
     }
-
-
 }

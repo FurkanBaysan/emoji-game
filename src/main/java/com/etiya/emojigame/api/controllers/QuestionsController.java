@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "questions/")
-@CrossOrigin(origins = "http://localhost:8080/")
+@CrossOrigin(origins = {"http://localhost:8082/","https://localhost:8082/","https://emojigame.etiyadim.com/"})
 public class QuestionsController {
     private QuestionService questionService;
 
@@ -40,5 +40,4 @@ public class QuestionsController {
     public DataResult<List<GetQuestionResponse>> getRelatedQuestionByItsCategory(@RequestParam String category) {
         return this.questionService.getRelatedQuestionByItsCategory(category);
     }
-
 }

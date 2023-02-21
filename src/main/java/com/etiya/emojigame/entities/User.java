@@ -22,8 +22,6 @@ public class User {
     @Column(name = "username")
     private String userName;
 
-
-
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private Score score;
 

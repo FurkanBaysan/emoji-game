@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Answer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,6 +25,5 @@ public class Answer {
     @OneToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     private Question question;
-
 
 }

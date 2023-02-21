@@ -27,5 +27,4 @@ public class Emoji {
     @Column(name = "imageurl")
     private String imageUrl;
 
-
 }

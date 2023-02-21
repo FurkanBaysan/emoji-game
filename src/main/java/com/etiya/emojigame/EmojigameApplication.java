@@ -40,7 +40,6 @@ public class EmojigameApplication {
         SpringApplication.run(EmojigameApplication.class, args);
     }
 
-
     @Bean
     public ModelMapper getModelMapper() {
         return new ModelMapper();
@@ -73,16 +72,10 @@ public class EmojigameApplication {
         return new ErrorDataResult<Object>(errors, methodArgumentNotValidException.getClass().getSimpleName());
     }
 
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDataResult<Object> handleBusinessException(BusinessException businessException) {
         return new ErrorDataResult<Object>(businessException.getMessage(), businessException.getClass().getSimpleName());
     }
 
-
 }
-
-
-
-

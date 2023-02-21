@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Paths.apiPrefix + "answers/")
-@CrossOrigin(origins = "http://localhost:8080/")
+@CrossOrigin(origins = {"http://localhost:8082/","https://localhost:8082/","https://emojigame.etiyadim.com/"})
 public class AnswersController {
     private AnswerService answerService;
 
@@ -22,5 +22,4 @@ public class AnswersController {
     public Result getAnswer(@RequestBody GetAnswerRequest answerRequest) {
         return this.answerService.getAnswer(answerRequest);
     }
-
 }
