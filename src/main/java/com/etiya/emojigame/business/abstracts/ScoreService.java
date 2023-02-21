@@ -14,5 +14,4 @@ public interface ScoreService {
 
     public Score handleInitialOrWrongAnswer(int userId);
 
-    public void job();
 }

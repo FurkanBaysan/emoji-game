@@ -13,14 +13,8 @@ import java.util.Date;
 @Getter
 @Setter
 public class GetAllGameResultResponse {
-
-
-
     private double second;
     private int point;
-
-    // TODO: should be retrieved from UI.
-
     private String userName;
 
 }

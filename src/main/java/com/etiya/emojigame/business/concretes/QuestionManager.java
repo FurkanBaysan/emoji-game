@@ -93,7 +93,6 @@ public class QuestionManager implements QuestionService {
 
         Question question = new Question();
         Question savedQuestion = this.questionRepository.save(question);
-        //question.setId(addEmojiRequest.getQuestionId());
 
         Answer answer = new Answer();
         answer.setQuestion(savedQuestion);
@@ -123,7 +122,6 @@ public class QuestionManager implements QuestionService {
         return new SuccessResult(this.messageService.getMessage(Messages.Question.emojisForRelatedQuestionSuccessfullyAdded));
 
     }
-
 
     @Override
     public DataResult<List<GetQuestionResponse>> getRelatedQuestionByItsCategory(String category) {
@@ -156,6 +154,4 @@ public class QuestionManager implements QuestionService {
             throw new BusinessException("there is no question corresponding with this category");
         }
     }
-
-
 }

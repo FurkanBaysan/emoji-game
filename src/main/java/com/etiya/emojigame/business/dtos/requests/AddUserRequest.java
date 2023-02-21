@@ -14,7 +14,6 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 public class AddUserRequest {
-
     @Pattern(regexp = "(^[a-zA-Z0-9\\W][a-zA-Z][a-zA-Z0-9\\W+]+$)", message = Messages.User.userNameMustContainLetters)
     private String userName;
 }

@@ -76,17 +76,4 @@ public class ScoreManager implements ScoreService {
         this.scoreRepository.save(score);
     }
 
-    @Override
-    // @Scheduled(cron = "0 27 16 ? * *")
-    public void job() {
-        //this.logger.info("Log Current Time: " + new Date());
-
-        Score score = new Score();
-
-        //this.scoreRepository.deleteAllScoreRecords();
-
-
-    }
-
 }
-

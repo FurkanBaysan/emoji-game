@@ -13,9 +13,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     @Query(value = "select a from Answer as a where name=:answerName")
     public Answer getAnswerByAnswerName(String answerName);
 
-
     @Query("select a from Answer as a where question_id=:questionId and name=:answerName")
     public Answer getAnswerName(int questionId,String answerName);
-
 
 }

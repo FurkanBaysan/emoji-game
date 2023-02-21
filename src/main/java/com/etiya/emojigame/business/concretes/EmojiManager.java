@@ -22,12 +22,12 @@ public class EmojiManager implements EmojiService {
     }
 
     @Override
-    public void save(Emoji emoji) {
-        this.emojiRepository.save(emoji);
+    public List<Emoji> getAllEmojis() {
+        return this.emojiRepository.findAll();
     }
 
     @Override
-    public List<Emoji> getAllEmojis() {
-        return this.emojiRepository.findAll();
+    public void save(Emoji emoji) {
+        this.emojiRepository.save(emoji);
     }
 }

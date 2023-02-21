@@ -31,7 +31,6 @@ public class UserManager implements UserService {
 
     private UserRepository userRepository;
     private MessageService messageService;
-
     Logger logger = LoggerFactory.getLogger(EmojigameApplication.class);
 
     @Autowired
@@ -42,7 +41,6 @@ public class UserManager implements UserService {
 
     @Override
     @Transactional
-
     public DataResult<AddUserResponse> addUser(AddUserRequest addUserRequest) {
 
         User user = new User();
@@ -62,6 +60,19 @@ public class UserManager implements UserService {
         return new SuccessDataResult<AddUserResponse>(addUserResponse, this.messageService.getMessage(Messages.User.userAdded));
 
     }
+    @Override
+    @Scheduled(cron = "0 39 16 ? * *")
+    public void job() {
+
+        this.logger.info("Log Tables Delete Time: " + new Date());
+
+        this.userRepository.deleteAll();
+
+    }
+
+    public void saveUser(User user) {
+        this.userRepository.save(user);
+    }
 
     private void checkUserExistWithSameName(String userName) {
         User user = this.userRepository.findByUserName(userName);
@@ -71,30 +82,4 @@ public class UserManager implements UserService {
         }
 
     }
-
-    public void saveUser(User user) {
-        this.userRepository.save(user);
-    }
-
-
-    @Override
-    @Scheduled(cron = "0 39 16 ? * *")
-    public void job() {
-
-        this.logger.info("Log Current Time: " + new Date());
-
-        User user = new User();
-        user.setUserName("UserThatAddedWithCronJob");
-
-        UserManager userManager = new UserManager(userRepository, messageService);
-
-        //userManager.saveUser(user);
-        //saveUser(user);
-
-        //this.userRepository.deleteAllUserRecords();
-        this.userRepository.deleteAll();
-
-    }
-
-
 }
