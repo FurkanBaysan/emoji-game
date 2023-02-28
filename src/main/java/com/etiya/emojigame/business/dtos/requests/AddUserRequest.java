@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +16,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class AddUserRequest {
     @Pattern(regexp = "(^[a-zA-Z0-9\\W][a-zA-Z][a-zA-Z0-9\\W+]+$)", message = Messages.User.userNameMustContainLetters)
+    @Size(min = 3, max = 15)
     private String userName;
 }

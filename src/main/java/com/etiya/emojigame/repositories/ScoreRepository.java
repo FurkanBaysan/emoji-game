@@ -27,4 +27,6 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
     @Modifying(clearAutomatically = true)
     @Query(value = "delete from scores", nativeQuery = true)
     public void deleteAllScoreRecords();
+
+
 }

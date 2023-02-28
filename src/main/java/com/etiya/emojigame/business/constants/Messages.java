@@ -38,4 +38,8 @@ public class Messages {
         public static final String questionNotExist = "questionNotExist";
     }
 
+    public static class Score {
+        public static final String scoreOfRelatedUserHasBeenReset = "scoreOfRelatedUserHasBeenReset";
+    }
+
 }
